@@ -44,7 +44,72 @@ ChatBot::~ChatBot()
 
 //// STUDENT CODE
 ////
+ChatBot::ChatBot(const ChatBot &source) // 2. copy constructor
+{
+    std::cout << "ChatBot Copy Constructor" << std::endl;
 
+    // copy the data handles
+    _currentNode = source._currentNode;
+    _rootNode = source._rootNode;
+    _chatLogic = source._chatLogic;
+    _image = source._image;
+}
+
+ChatBot &ChatBot::operator=(const ChatBot &source) // 3. copy assignment operator
+{
+    std::cout << "ChatBot Copy Assignment Operator" << std::endl;
+
+    // copy the data handles
+    _currentNode = source._currentNode;
+    _rootNode = source._rootNode;
+    _chatLogic = source._chatLogic;
+    _image = source._image;
+
+    return *this;
+
+}
+
+ChatBot::ChatBot(ChatBot &&source) // 4. move constructor
+{
+    std::cout << "ChatBot Move Constructor" << std::endl;
+
+    // moving all data handles
+    _currentNode = source._currentNode;
+    _rootNode = source._rootNode;
+    _chatLogic = source._chatLogic;
+    _image = source._image;
+
+    // update the chatlogic with the moved chatbot
+    this->_chatLogic->SetChatbotHandle(this);
+
+    // invalidating all the source data handles after being moved to destination
+    source._currentNode = nullptr;
+    source._rootNode = nullptr;
+    source._chatLogic = nullptr;
+    source._image = nullptr;
+}
+
+ChatBot &ChatBot::operator=(ChatBot &&source) // 5. move assignment operator
+{
+    std::cout << "ChatBot Move Assignment Operator" << std::endl;
+
+    // moving all data handles
+    _currentNode = source._currentNode;
+    _rootNode = source._rootNode;
+    _chatLogic = source._chatLogic;
+    _image = source._image;
+
+    // update the chatlogic with the moved chatbot
+    _chatLogic->SetChatbotHandle(this);
+    
+    // invalidating all the source data handles after being moved to destination
+    source._currentNode = nullptr;
+    source._rootNode = nullptr;
+    source._chatLogic = nullptr;
+    source._image = nullptr;
+    
+    return *this;
+}
 ////
 //// EOF STUDENT CODE
 
